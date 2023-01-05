@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Document</title>
+
+ <style>
+  #container {
+   width: 200px;
+  }
+
+  #container * {
+   display: block;
+   margin-top: 10px;
+  }
+
+  #page {
+   display: none;
+  }
+ </style>
+</head>
+
+<body>
+
+ <h1>Fetch/POST</h1>
+
+ <h2>Beispiel</h2>
+
+ <div id="container">
+  <h3>Login</h3>
+  <input type="text" id="usernameInput" placeholder="Username">
+  <input type="password" id="passwordInput" placeholder="Password">
+  <button id="loginButton">Login</button>
+  <p id="errorText"></p>
+ </div>
+
+ <div id="page">
+  User <span id="usernameOutput">Test</span> Logged in!
+ </div>
+
+ <script>
+  const usernameInput = document.getElementById("usernameInput");
+  const passwordInput = document.getElementById("passwordInput");
+  const loginButton = document.getElementById("loginButton");
+  const errorText = document.getElementById("errorText");
+  const page = document.getElementById("page");
+  const usernameOutput =  document.getElementById("usernameOutput");
+
+
+  loginButton.addEventListener("click", (e) => {
+   if(!usernameInput.value || !passwordInput.value){
+    errorText.innerText ="enter username and password";
+    setTimeout(blank, 3000)
+   } else {
+    goFetchBuddy()
+   }
+  });
+
+
+  async function goFetchBuddy() {
+   const userInfo = {
+    username: ` ${usernameInput.value}`,
+    password: `${passwordInput.value}`,
+   };
+   console.log(userInfo);
+   const response = await fetch("https://httpbin.org/post" 
+  , {
+     method: 'POST',
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify(userInfo),
+    });
+    console.log(response)
+    const data = await response.json();
+    console.log(data);
+    const parse = JSON.parse(data.data)
+
+  }
+  function blank() {
+   errorText.innerText = ""
+  }
+
+
+
+
+
+
+
+
+
+  // const submit = async () => {
+  //  document.getElementById("errorText").innerText = "";
+  //  const user = {
+  //    username: document.getElementById("usernameInput").value,
+  //    password: document.getElementById("passwordInput").value,
+  //  }
+
+  //  const url = "https://httpbin.org/post";
+  //  const option = {
+  //    method: 'POST',
+  //    headers: {
+  //     'Content-Type': 'application/json',
+  //    },
+  //    body: JSON.stringify(user),
+  
+  //  }
+  //  console.log(user);
+  //  if (user.username=="" || user.password==""){
+  //   document.getElementById("errorText").innerText = "Username is required.";
+  //  }try {
+  //   const response = await fetch(url, option)
+  //   console.log(response);
+  //   const data =await response.json();
+  //   const parseData = JSON.parse(data.data)
+  //   console.log(parseData)
+  //  }catch(e){
+  //   console.log(e,e.message)
+  //  }
+  // }
+
+
+
+
+
+ </script>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Document</title>
+</head>
+
+<body>
+
+ <input type="text" name="search" id="search" value="">
+ <button onclick="submit()">search</button>
+ <div id="a">
+
+ </div>
+
+<script>
+
+
+
+ const div1 = document.getElementById(`a`);
+ const search = document.getElementById("search");
+ const submit = () => {
+  div1.innerHTML = "";
+  fetch(`https://api.jikan.moe/v4/anime?q=${search.value}&sfw`).then(response => response.json()).then(
+   data => {
+    console.log(data);
+    data.data.map((x) => {
+     /*             const img = document.createElement("img");
+                 img.src = x.images.jpg.image_url;
+                 div1.appendChild(img); */
+     div1.innerHTML += `<img src="${x.images.jpg.image_url}"> </img>
+            <p>${x.title}</p>`
+    })
+   })
+ }
+</script>
+
+
+ <script src="index.js"></script>
+</body>
+
+</html>
